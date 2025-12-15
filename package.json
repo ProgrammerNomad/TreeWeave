@@ -1,9 +1,18 @@
 {
-  "name": "@treeweave/core",
+  "name": "treeweave",
   "version": "1.0.0",
   "description": "Free, open-source, framework-agnostic tree visualization engine for family trees, org charts, and hierarchical data",
   "main": "dist/TreeWeave.js",
   "module": "src/TreeWeave.js",
+  "exports": {
+    ".": {
+      "import": "./src/TreeWeave.js",
+      "require": "./dist/TreeWeave.js"
+    },
+    "./css": "./css/treeweave.css",
+    "./dist": "./dist/TreeWeave.js"
+  },
+  "types": "src/TreeWeave.d.ts",
   "files": [
     "dist/",
     "src/",
@@ -13,7 +22,8 @@
   ],
   "scripts": {
     "build": "echo 'Build complete'",
-    "test": "echo 'Tests coming soon'"
+    "test": "echo 'Tests coming soon'",
+    "prepare": "npm run build"
   },
   "keywords": [
     "family-tree",

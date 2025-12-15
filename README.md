@@ -90,20 +90,37 @@ TreeWeave is built for developers who want full control and long-term freedom.
 ### Using NPM (Recommended)
 
 ```bash
-npm install @treeweave/core
+npm install treeweave
 ```
 
 ### Using Yarn
 
 ```bash
-yarn add @treeweave/core
+yarn add treeweave
 ```
 
 ### Using pnpm
 
 ```bash
-pnpm add @treeweave/core
+pnpm add treeweave
 ```
+
+### For Laravel Projects
+
+```bash
+npm install treeweave
+```
+
+Then import in `resources/js/app.js`:
+
+```javascript
+import TreeWeave from 'treeweave';
+import 'treeweave/css';
+
+window.TreeWeave = TreeWeave;
+```
+
+See [LARAVEL.md](LARAVEL.md) for complete Laravel integration guide.
 
 ### Direct Usage (No Build Step)
 
@@ -238,7 +255,7 @@ TreeWeave separates layout logic from rendering logic, making it easy to extend,
   <div id="tree"></div>
 
   <script type="module">
-    import { TreeWeave } from '@treeweave/core';
+    import { TreeWeave } from 'treeweave';
 
     const data = {
       id: '1',
@@ -313,7 +330,7 @@ const options = {
 ### Step 1: Install TreeWeave
 
 ```bash
-npm install @treeweave/core
+npm install treeweave
 ```
 
 ### Step 2: Controller (PHP)
@@ -362,7 +379,7 @@ class FamilyTreeController extends Controller
 ### Step 4: JavaScript (resources/js/treeweave.js)
 
 ```javascript
-import { TreeWeave } from '@treeweave/core';
+import { TreeWeave } from 'treeweave';
 
 document.addEventListener('DOMContentLoaded', () => {
   const tree = new TreeWeave({ 
@@ -423,8 +440,7 @@ class FamilyMember extends Model
 
 ```jsx
 import { useEffect, useRef } from 'react';
-import { TreeWeave } from '@treeweave/core';
-
+    import { TreeWeave } from 'treeweave';
 export default function TreePage({ data }) {
   const ref = useRef(null);
 
@@ -462,7 +478,7 @@ export default function TreePage({ data }) {
 ### Server-side Rendering (SSR)
 
 ```jsx
-import { TreeWeave } from '@treeweave/core';
+import { TreeWeave } from 'treeweave';
 
 export default function TreePage({ svgString }) {
   return (
@@ -503,7 +519,7 @@ export async function getServerSideProps() {
 </template>
 
 <script>
-import { TreeWeave } from '@treeweave/core';
+import { TreeWeave } from 'treeweave';
 
 export default {
   name: 'TreeView',
@@ -1006,7 +1022,7 @@ Every contribution, no matter how small, helps build a better tool for everyone.
 ## Quick Links
 
 - **Repository**: [github.com/ProgrammerNomad/TreeWeave](https://github.com/ProgrammerNomad/TreeWeave)
-- **NPM Package**: [@treeweave/core](https://www.npmjs.com/package/@treeweave/core)
+- **NPM Package**: [treeweave](https://www.npmjs.com/package/treeweave)
 - **Documentation**: [docs.treeweave.dev](https://docs.treeweave.dev) (coming soon)
 - **Examples**: [examples.treeweave.dev](https://examples.treeweave.dev) (coming soon)
 - **Changelog**: [CHANGELOG.md](CHANGELOG.md)
