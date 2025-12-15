@@ -189,7 +189,8 @@
 
     // Calculate starting X for children
     let childX = x - (node.subtreeWidth / 2) + (this.options.nodeWidth / 2);
-    const childY = y + this.options.levelGap;
+    const stubLength = 20; // Stub line length below parent
+    const childY = y + this.options.levelGap + stubLength;
 
     node.children.forEach(child => {
       const childCenterX = childX + (child.subtreeWidth / 2) - (this.options.nodeWidth / 2);
@@ -333,9 +334,11 @@
   TreeWeave.prototype._createConnector = function (parent, child) {
     const parentPos = this._positions.get(parent.id);
     const childPos = this._positions.get(child.id);
+    
+    const stubLength = 20; // Match the stub line length
 
     const x1 = parentPos.x + (this.options.nodeWidth / 2);
-    const y1 = parentPos.y + this.options.nodeHeight;
+    const y1 = parentPos.y + this.options.nodeHeight + stubLength; // Start after stub
     const x2 = childPos.x + (this.options.nodeWidth / 2);
     const y2 = childPos.y;
 
@@ -609,6 +612,23 @@
       const absoluteX = pos.x + this.options.nodeWidth / 2 - buttonSize / 2;
       const absoluteY = pos.y + this.options.nodeHeight - 12;
 
+      // Check if node is expanded
+      const isCollapsed = this._collapsedNodes.has(String(node.id));
+      
+      // Add vertical stub line below button when expanded
+      if (!isCollapsed && node.children && node.children.length > 0) {
+        const stubLine = this._createSVGNode('line', {
+          x1: this.options.nodeWidth / 2,
+          y1: this.options.nodeHeight,
+          x2: this.options.nodeWidth / 2,
+          y2: this.options.nodeHeight + 20,
+          stroke: '#9ca3af',
+          'stroke-width': '2',
+          class: 'tw-connector-stub'
+        });
+        group.appendChild(stubLine);
+      }
+
       collapseButtonGroup = this._createSVGNode('g', {
         class: 'tw-collapse-button',
         'data-role': 'collapse-button',
@@ -628,8 +648,7 @@
       });
       collapseButtonGroup.appendChild(buttonCircle);
 
-      // Plus or minus icon
-      const isCollapsed = this._collapsedNodes.has(String(node.id));
+      // Plus or minus icon (isCollapsed already defined above)
       const iconText = isCollapsed ? '+' : '−';
       
       const buttonIcon = this._createSVGNode('text', {
