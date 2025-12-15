@@ -847,6 +847,98 @@ See the [LICENSE](LICENSE) file for full details.
 
 ---
 
+## Current Development Progress
+
+### Recent Updates (December 2025)
+
+#### Visual Polish & Professional Features ✅
+- **Collapse Button Positioning**: Centered at -12px (half inside/half outside card border) matching Balkan OrgChart style
+- **Stub Lines**: 10px vertical lines below collapse buttons when nodes are expanded
+- **Dynamic Node Heights**: Automatically adjusts to +16px when title field is present
+- **Avatar Sizing**: Reduced from 50px to 40px for cleaner, more compact look
+- **Menu Dots Removed**: Three-dot menu disabled by default for cleaner interface
+
+#### Text Layout & Spacing ✅
+- **DOB Positioning**: Properly spaced 32px below name when title present, 18px otherwise
+- **Gender Overlap Fixed**: No more text collisions between DOB and gender fields
+- **Title Field Cleanup**: Removed from all demo files (can still be enabled via options)
+
+#### Interactive Features ✅
+- **Clickable Gender Links**: Gender text (♂ Male / ♀ Female) now clickable with:
+  - Dotted underline styling
+  - Pointer cursor on hover
+  - Opens Wikipedia in new tab (customizable via `onNodeClick` callback)
+  - Example implementation in advanced-demo.html
+- **Hover Stability**: Removed scale transform that caused button shaking
+
+#### Export & Download ✅
+- **PDF Export**: Top padding increased from 40px to 60px to prevent cropping
+- **File Downloads**: Top node no longer gets cut off in downloaded SVG/PNG files
+
+#### Connector System ✅
+- **Stub Line Integration**: Connectors start 20px below parent to align with stub lines
+- **Child Node Positioning**: Automatically offset by stub length for proper alignment
+- **Clean Connections**: No crossing between vertical stubs and horizontal connectors
+
+#### CSS Improvements ✅
+- **Gender Text Styling**: Clickable appearance with `cursor: pointer` and dotted underline
+- **Hover Effects**: Opacity transition (0.7) on gender text hover
+- **Button Stability**: Removed transform scale to prevent shaking on hover
+
+### API Enhancements
+
+#### Callback System
+- `onNodeClick(node, event)`: Detect clicks on specific elements (gender, name, photo)
+- Event target checking via `event.target.classList.contains()`
+- Example: Click gender to open custom links or show details
+
+### Demos & Examples
+- **Family Tree Demo**: Clean layout without title fields
+- **Org Chart Dark Demo**: Professional dark theme with all title fields removed
+- **Advanced Demo**: Full feature showcase with clickable gender links
+
+### Configuration Defaults Updated
+```javascript
+{
+  showMenu: false,        // Menu dots disabled (was true)
+  photoSize: 40,          // Avatar size (was 50)
+  stubLength: 10,         // Stub line height (was 20)
+  topPadding: 60          // Export padding (was 40)
+}
+```
+
+### What's Working Perfectly
+✅ Collapse/expand functionality with smooth animations  
+✅ Professional button styling matching industry standards  
+✅ Dynamic layouts adapting to content  
+✅ Clean connector lines with proper spacing  
+✅ Mobile-responsive touch controls  
+✅ Export to SVG/PNG/PDF without cropping  
+✅ Clickable elements with custom event handling  
+✅ Gender-based color coding (male: blue, female: pink)  
+✅ Circular avatars with initials fallback  
+✅ Zoom and pan controls  
+
+### Next Steps (Planned)
+- [ ] Horizontal layout support (left-to-right trees)
+- [ ] Lazy rendering for very large trees (5000+ nodes)
+- [ ] Advanced search and filtering
+- [ ] Keyboard navigation and accessibility (ARIA labels)
+- [ ] Undo/redo system for tree editing
+- [ ] Drag-and-drop node repositioning
+- [ ] Real-time collaborative editing
+- [ ] NPM package publication
+- [ ] TypeScript type definitions
+- [ ] Comprehensive unit tests
+
+### Known Issues
+None currently! All reported issues have been resolved.
+
+### Community Feedback Welcome
+If you find bugs or have feature requests, please open an issue on GitHub. We're actively improving TreeWeave based on real-world usage.
+
+---
+
 ## Inspiration & Philosophy
 
 TreeWeave was created out of frustration with the current state of tree visualization libraries:

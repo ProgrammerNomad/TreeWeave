@@ -242,7 +242,7 @@
     // Create main group with padding
     const mainGroup = this._createSVGNode('g', {
       class: 'tw-main-group',
-      transform: `translate(${this.options.nodeWidth / 2}, 40)`
+      transform: `translate(${this.options.nodeWidth / 2}, 60)`
     });
 
     // Draw connectors first (so they appear behind nodes)
