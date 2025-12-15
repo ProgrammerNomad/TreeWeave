@@ -623,6 +623,22 @@
           enableCollapse: true,
           enableZoom: true,
           onNodeClick: function(node, event) {
+            const clickedElement = event.target;
+            
+            // Check if gender text was clicked
+            if (clickedElement.classList.contains('tw-gender')) {
+              event.stopPropagation();
+              const gender = node.meta.gender;
+              const genderText = gender === 'male' ? 'Male' : 'Female';
+              
+              // Simulate link behavior - open in new tab
+              const url = `https://en.wikipedia.org/wiki/${genderText}`;
+              window.open(url, '_blank');
+              
+              console.log('Gender link clicked:', genderText, 'for', node.label);
+              return;
+            }
+            
             console.log('Clicked:', node.label);
             // You can add custom click behavior here
           }
