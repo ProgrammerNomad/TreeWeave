@@ -72,6 +72,17 @@ TreeWeave is built for developers who want full control and long-term freedom.
 - TypeScript definitions included
 - Comprehensive API documentation
 
+### Styling & Theming
+
+- **Level-based node coloring** - Automatic color schemes per tree level
+- **Circular avatar support** - Professional photo rendering with fallback placeholders
+- **Gender-specific styling** - Male/female color differentiation
+- **Responsive design** - Mobile, tablet, and desktop optimized
+- **Dark mode ready** - Built-in dark theme support
+- **Hover effects** - Smooth transitions and visual feedback
+- **Custom CSS** - Override any style with standard CSS
+- **Print-friendly** - Optimized for PDF generation and printing
+
 ---
 
 ## Installation
@@ -152,6 +163,29 @@ TreeWeave uses a simple recursive JSON structure:
 
 - `meta` (object) - Any custom data (photos, dates, descriptions, etc.)
 - `children` (array) - Array of child nodes
+
+### Advanced Metadata Examples
+
+```json
+{
+  "id": "1",
+  "label": "John Doe",
+  "meta": {
+    "gender": "male",
+    "photo": "https://example.com/john.jpg",
+    "dob": "1950-05-15",
+    "dod": "2020-12-31",
+    "email": "john@example.com",
+    "phone": "+1-234-567-8900",
+    "title": "CEO & Founder",
+    "location": "New York, USA",
+    "bio": "Founded the company in 1980...",
+    "customField": "Any custom data"
+  }
+}
+```
+
+You can add **any custom fields** in the `meta` object and access them in your node rendering template or callbacks.
 
 ---
 
@@ -879,7 +913,7 @@ Every contribution, no matter how small, helps build a better tool for everyone.
 
 ## Quick Links
 
-- **Repository**: [github.com/treeweave/treeweave](https://github.com/treeweave/treeweave)
+- **Repository**: [github.com/ProgrammerNomad/TreeWeave](https://github.com/ProgrammerNomad/TreeWeave)
 - **NPM Package**: [@treeweave/core](https://www.npmjs.com/package/@treeweave/core)
 - **Documentation**: [docs.treeweave.dev](https://docs.treeweave.dev) (coming soon)
 - **Examples**: [examples.treeweave.dev](https://examples.treeweave.dev) (coming soon)

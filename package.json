@@ -1,0 +1,39 @@
+{
+  "name": "@treeweave/core",
+  "version": "1.0.0",
+  "description": "Free, open-source, framework-agnostic tree visualization engine for family trees, org charts, and hierarchical data",
+  "main": "dist/TreeWeave.js",
+  "module": "src/TreeWeave.js",
+  "files": [
+    "dist/",
+    "src/",
+    "css/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "test": "echo 'Tests coming soon'"
+  },
+  "keywords": [
+    "family-tree",
+    "org-chart",
+    "tree-visualization",
+    "genealogy",
+    "hierarchy",
+    "svg",
+    "javascript",
+    "framework-agnostic",
+    "open-source"
+  ],
+  "author": "ProgrammerNomad",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ProgrammerNomad/TreeWeave.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ProgrammerNomad/TreeWeave/issues"
+  },
+  "homepage": "https://github.com/ProgrammerNomad/TreeWeave#readme"
+}

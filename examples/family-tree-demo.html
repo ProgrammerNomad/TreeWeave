@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TreeWeave - Family Tree Demo</title>
+  <link rel="stylesheet" href="../css/treeweave.css?v=7">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+
+    .tree-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      padding: 30px;
+      overflow: auto;
+      max-height: 80vh;
+      position: relative;
+    }
+
+    #tree {
+      min-height: 500px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .controls {
+      background: rgba(255,255,255,0.95);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .controls h3 {
+      margin-bottom: 15px;
+      color: #374151;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.6);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .info-box {
+      background: #f3f4f6;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .info-box h4 {
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    .info-box p {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .legend {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-color {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 3px solid currentColor;
+      background: white;
+    }
+
+    .legend-color.male {
+      color: #3b82f6;
+    }
+
+    .legend-color.female {
+      color: #ec4899;
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      margin-top: 30px;
+      opacity: 0.9;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .tree-container {
+        padding: 15px;
+      }
+
+      button {
+        padding: 10px 18px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>TreeWeave Family Tree</h1>
+      <p>Free & Open Source Family Tree Visualization</p>
+    </header>
+
+    <div class="controls">
+      <h3>Demo Controls</h3>
+      <div class="button-group">
+        <button onclick="loadSimpleTree()">Simple Family</button>
+        <button onclick="loadLargeTree()">Extended Family</button>
+        <button onclick="toggleConnectors()">Toggle Connectors</button>
+        <button onclick="downloadSVG()">Download SVG</button>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color male"></div>
+          <span>Male</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color female"></div>
+          <span>Female</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tree-container">
+      <div id="tree"></div>
+    </div>
+
+    <div class="info-box">
+      <h4>About This Demo</h4>
+      <p>
+        This is a demonstration of TreeWeave, a free and open-source family tree visualization library.
+        TreeWeave is framework-agnostic and works with vanilla JavaScript, React, Vue, Laravel, and more.
+        The library uses SVG for rendering, ensuring crisp graphics on all devices and enabling easy customization through CSS.
+        <br><br>
+        <strong>Features showcased:</strong> Circular avatars with automatic initials fallback (when no photo is provided),
+        level-based node coloring, responsive design, gender-specific styling, and interactive collapse/expand functionality.
+      </p>
+    </div>
+
+    <footer>
+      <p>Built with TreeWeave | MIT License | <a href="https://github.com/ProgrammerNomad/TreeWeave">GitHub</a></p>
+    </footer>
+  </div>
+
+  <script src="../src/TreeWeave.js?v=7"></script>
+  <script>
+    let currentTree = null;
+    let useLineConnectors = true;
+
+    // Simple family tree data (mixed with and without photos to show avatar fallback)
+    const simpleFamilyData = {
+      id: '1',
+      label: 'Ram Lal',
+      meta: {
+        gender: 'male',
+        dob: '1950-01-15',
+        title: 'Family Patriarch',
+        photo: 'https://i.pravatar.cc/150?img=12'
+      },
+      children: [
+        {
+          id: '2',
+          label: 'Mohan Kumar',
+          meta: {
+            gender: 'male',
+            dob: '1975-03-22',
+            title: 'Elder Son'
+            // No photo - will show initials avatar
+          },
+          children: [
+            {
+              id: '4',
+              label: 'Amit Kumar',
+              meta: {
+                gender: 'male',
+                dob: '2000-08-10',
+                title: 'Grandson',
+                photo: 'https://i.pravatar.cc/150?img=14'
+              }
+            },
+            {
+              id: '5',
+              label: 'Priya Sharma',
+              meta: {
+                gender: 'female',
+                dob: '2002-12-05',
+                title: 'Granddaughter'
+                // No photo - will show initials avatar
+              }
+            }
+          ]
+        },
+        {
+          id: '3',
+          label: 'Sohan Singh',
+          meta: {
+            gender: 'male',
+            dob: '1978-07-18',
+            title: 'Younger Son',
+            photo: 'https://i.pravatar.cc/150?img=15'
+          },
+          children: [
+            {
+              id: '6',
+              label: 'Ravi Singh',
+              meta: {
+                gender: 'male',
+                dob: '2005-04-25',
+                title: 'Grandson'
+                // No photo - will show initials avatar
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    // Extended family tree data
+    const largeFamilyData = {
+      id: '1',
+      label: 'Babu Ram',
+      meta: {
+        gender: 'male',
+        dob: '1930-05-10',
+        photo: 'https://i.pravatar.cc/150?img=33'
+      },
+      children: [
+        {
+          id: '2',
+          label: 'Ram Lal',
+          meta: {
+            gender: 'male',
+            dob: '1955-03-15',
+            photo: 'https://i.pravatar.cc/150?img=12'
+          },
+          children: [
+            {
+              id: '5',
+              label: 'Mohan Kumar',
+              meta: {
+                gender: 'male',
+                dob: '1980-06-22',
+                photo: 'https://i.pravatar.cc/150?img=13'
+              },
+              children: [
+                {
+                  id: '9',
+                  label: 'Amit Kumar',
+                  meta: {
+                    gender: 'male',
+                    dob: '2005-08-10',
+                    photo: 'https://i.pravatar.cc/150?img=14'
+                  },
+                  children: [
+                    {
+                      id: '7',
+                      label: 'Rahul Kumar',
+                      meta: {
+                        gender: 'male',
+                        dob: '2023-06-15',
+                        photo: 'https://i.pravatar.cc/150?img=51'
+                      }
+                    }
+                  ],
+                  children: [
+                    {
+                      id: '15',
+                      label: 'Rohit Kumar',
+                      meta: {
+                        gender: 'male',
+                        dob: '2024-03-18',
+                        photo: 'https://i.pravatar.cc/150?img=60'
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: '10',
+                  label: 'Priya Sharma',
+                  meta: {
+                    gender: 'female',
+                    dob: '2008-12-05',
+                    photo: 'https://i.pravatar.cc/150?img=5'
+                  }
+                }
+              ]
+            },
+            {
+              id: '6',
+              label: 'Sohan Singh',
+              meta: {
+                gender: 'male',
+                dob: '1983-09-18',
+                photo: 'https://i.pravatar.cc/150?img=15'
+              },
+              children: [
+                {
+                  id: '11',
+                  label: 'Ravi Singh',
+                  meta: {
+                    gender: 'male',
+                    dob: '2010-04-25',
+                    photo: 'https://i.pravatar.cc/150?img=16'
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: '3',
+          label: 'Sita Devi',
+          meta: {
+            gender: 'female',
+            dob: '1958-08-20',
+            photo: 'https://i.pravatar.cc/150?img=9'
+          },
+          children: [
+            {
+              id: '7',
+              label: 'Anjali Verma',
+              meta: {
+                gender: 'female',
+                dob: '1985-11-12',
+                photo: 'https://i.pravatar.cc/150?img=10'
+              },
+              children: [
+                {
+                  id: '12',
+                  label: 'Sneha Verma',
+                  meta: {
+                    gender: 'female',
+                    dob: '2012-02-14',
+                    photo: 'https://i.pravatar.cc/150?img=11'
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: '4',
+          label: 'Lakshman Das',
+          meta: {
+            gender: 'male',
+            dob: '1962-12-25',
+            photo: 'https://i.pravatar.cc/150?img=17'
+          },
+          children: [
+            {
+              id: '8',
+              label: 'Vivek Das',
+              meta: {
+                gender: 'male',
+                dob: '1990-07-08',
+                photo: 'https://i.pravatar.cc/150?img=18'
+              },
+              children: [
+                {
+                  id: '13',
+                  label: 'Arjun Das',
+                  meta: {
+                    gender: 'male',
+                    dob: '2015-05-20',
+                    photo: 'https://i.pravatar.cc/150?img=19'
+                  },
+                  children: [
+                    {
+                      id: '16',
+                      label: 'Aarav Das',
+                      meta: {
+                        gender: 'male',
+                        dob: '2024-08-22',
+                        photo: 'https://i.pravatar.cc/150?img=68'
+                      }
+                    }
+                  ]
+                },
+                {
+                  id: '14',
+                  label: 'Kavya Das',
+                  meta: {
+                    gender: 'female',
+                    dob: '2018-09-15',
+                    photo: 'https://i.pravatar.cc/150?img=6'
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    // Initialize with simple tree
+    function loadSimpleTree() {
+      renderTree(simpleFamilyData);
+    }
+
+    function loadLargeTree() {
+      renderTree(largeFamilyData);
+    }
+
+    function renderTree(data) {
+      const container = document.getElementById('tree');
+      container.innerHTML = '';
+
+      currentTree = new TreeWeave({
+        data: data,
+        options: {
+          nodeWidth: 180,
+          nodeHeight: 120,
+          levelGap: 140,
+          siblingGap: 40,
+          connectors: useLineConnectors ? 'line' : 'curve',
+          showPhoto: true,
+          showDOB: true,
+          showGender: true
+        }
+      });
+
+      const svg = currentTree.render();
+      container.appendChild(svg);
+    }
+
+    function toggleConnectors() {
+      useLineConnectors = !useLineConnectors;
+      if (currentTree) {
+        renderTree(currentTree.data);
+      }
+    }
+
+    function downloadSVG() {
+      if (!currentTree || !currentTree._svgElement) {
+        alert('Please render a tree first!');
+        return;
+      }
+
+      const svgData = new XMLSerializer().serializeToString(currentTree._svgElement);
+      const blob = new Blob([svgData], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'family-tree.svg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // Load simple tree on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      // Wait a bit for container to be properly sized
+      setTimeout(function() {
+        loadSimpleTree();
+      }, 100);
+    });
+  </script>
+</body>
+</html>
