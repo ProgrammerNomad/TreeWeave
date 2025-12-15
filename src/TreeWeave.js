@@ -75,7 +75,7 @@
     showDOB: true,
     showGender: true,
     showTitle: true,
-    showMenu: true,
+    showMenu: false,
     
     // Features
     enableCollapse: true,
@@ -189,7 +189,7 @@
 
     // Calculate starting X for children
     let childX = x - (node.subtreeWidth / 2) + (this.options.nodeWidth / 2);
-    const stubLength = 20; // Stub line length below parent
+    const stubLength = 10; // Stub line length below parent
     const childY = y + this.options.levelGap + stubLength;
 
     node.children.forEach(child => {
@@ -335,7 +335,7 @@
     const parentPos = this._positions.get(parent.id);
     const childPos = this._positions.get(child.id);
     
-    const stubLength = 20; // Match the stub line length
+    const stubLength = 10; // Match the stub line length
 
     const x1 = parentPos.x + (this.options.nodeWidth / 2);
     const y1 = parentPos.y + this.options.nodeHeight + stubLength; // Start after stub
@@ -450,7 +450,7 @@
 
     // Avatar/Photo (circular with fallback)
     if (this.options.showPhoto) {
-      const photoSize = 50;
+      const photoSize = 40;
       const photoX = (this.options.nodeWidth - photoSize) / 2;
       const photoY = 10;
       
@@ -621,7 +621,7 @@
           x1: this.options.nodeWidth / 2,
           y1: this.options.nodeHeight,
           x2: this.options.nodeWidth / 2,
-          y2: this.options.nodeHeight + 20,
+          y2: this.options.nodeHeight + 10,
           stroke: '#9ca3af',
           'stroke-width': '2',
           class: 'tw-connector-stub'
